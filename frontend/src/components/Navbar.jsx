@@ -75,9 +75,11 @@ export default class Navbar extends Component {
                                         Departments
                                     </MenuItem>
                                 </Link>
+                                <Link to = '/employee'>
                                 <MenuItem _hover={{ color: 'brand.900' }}>
                                     Employees
                                 </MenuItem>
+                                </Link>
                                 <Link to ='/item'>
                                     <MenuItem _hover={{ color: 'brand.900' }}>
                                         Items

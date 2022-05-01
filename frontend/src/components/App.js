@@ -5,7 +5,7 @@ import { Home, NoMatch, Inventory, Department, DepartmentCreate,
         DepartmentEdit, Customer, CustomerAll, CustomerSearch,Coupon,
         CouponCreate, CouponEdit, Item, ItemCreate,
         ItemCategory, ItemCategoryCreate, ItemCategorySearch, ItemCategoryAll,
-        Transaction, TransactionCreate, Store, StoreCreate, StoreEdit, StoreSearch, StoreAll } from "../pages/";
+        Transaction, TransactionCreate, Store, StoreCreate, StoreEdit, StoreSearch, StoreAll,Employee,EmployeeAdd } from "../pages/";
 import { extendTheme, ChakraProvider } from '@chakra-ui/react'
 //import StoreCreate from "../pages/StoreCreate";
 
@@ -41,6 +41,8 @@ export default class App extends Component {
                 <Route exact path="/store/edit" element={<StoreEdit />} />
                 <Route exact path="/store/search" element={<StoreSearch />} />
                 <Route exact path="/store/all" element={<ItemCategorySearch />} />
+                <Route exact path="/employee" element={<Employee />} />
+                <Route exact path="/employee/add" element={<EmployeeAdd />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
         </BrowserRouter>);
