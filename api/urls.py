@@ -23,7 +23,11 @@ from .views import (
     TransactionView,
     PATCHTransactionView,
     POSTTransactionView,
-    CALCTransactionView
+    CALCTransactionView,
+
+    EmployeeView,
+    GETEmployeeView,
+    POSTEmployeeView
 
 )
 
@@ -52,5 +56,9 @@ urlpatterns = [
     path("transaction",TransactionView.as_view()),
     path("patch-transaction",PATCHTransactionView.as_view()),
     path("post-transaction",POSTTransactionView.as_view()),
-    path("get-calc",CALCTransactionView.as_view())
+    path("get-calc",CALCTransactionView.as_view()),
+    #employee realted
+    path("employee",EmployeeView.as_view()),
+    path("get-employee",GETEmployeeView.as_view()),
+    path("post-employee",POSTEmployeeView.as_view())
 ]
