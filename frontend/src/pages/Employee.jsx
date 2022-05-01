@@ -46,7 +46,7 @@ export default class Employee extends Component {
                                 spacing={3}
                             >
                                 <Heading>Employees</Heading>
-                                <Link to='/employee/add'> 
+                                <Link to='/employee/add'>  
                                     <Button>Add Employee</Button>
                                 </Link>
                                 <Link to='/employee/all'>    

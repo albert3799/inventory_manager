@@ -4,8 +4,8 @@ import {
     Heading,
     Box,
     Stack,
-    HStack,
     Button,
+    Tooltip,
     Table,
     Thead,
     Tbody,
@@ -14,22 +14,28 @@ import {
     Th,
     Td,
 } from '@chakra-ui/react';
+import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import { Navbar } from '../components';
 import { Link } from 'react-router-dom';
 
-export default class EmployeeAll extends Component {
+class EmployeeTable extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             employee: undefined,
+    
         };
-    }
-
+    }    
+  
     componentDidMount() {
+        
         this.getEmployeeList();
+   
     }
 
+    // filters customer list on
+   
     getEmployeeList() {
         fetch('/api/get-employee')
             .then((response) => response.json())
@@ -39,7 +45,168 @@ export default class EmployeeAll extends Component {
                 });
             });
     }
+    render() {
+        return (
+            <Table size='md'>
+                <Thead>
+                    <Tr>
+                        <Th isNumeric>ID</Th>
+                        <Th isNumeric>Department ID</Th>
+                        <Th> Name</Th>
+                        <Th>Email</Th>
+                        <Th>Address</Th>
+                        <Th isNumeric>Phone</Th>
+                        <Th>Job Title</Th>
+                        <Th isNumeric>Salary</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {this.state.employee ? (
+                        this.state.employee.map((empl) => (
+                            <Tr key={empl.employee}>
+                                <Td isNumeric>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.employee_id}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.department_id}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.first_name + ' ' + empl.last_name}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.email}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.address}
+                                    </Link>
+                                </Td>
+                                <Td isNumeric>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.phone}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.job_title}
+                                    </Link>
+                                </Td>
+                                <Td isNumeric>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.salary}
+                                    </Link>
+                                </Td>
+                            </Tr>
+                        ))
+                    ) : this.props.employee ? (
+                        this.props.employee.map((empl) => (
+                            <Tr key={empl.employee_id}>
+                                                               <Td isNumeric>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.employee_id}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.department_id}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.first_name + ' ' + empl.last_name}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.email}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.address}
+                                    </Link>
+                                </Td>
+                                <Td isNumeric>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.phone}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.job_title}
+                                    </Link>
+                                </Td>
+                                <Td isNumeric>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.salary}
+                                    </Link>
+                                </Td>
+                            </Tr>
+                        ))
+                    ) : (
+                        <Tr>
+                            <Td>Loading...</Td>
+                            <Td></Td>
+                            <Td></Td>
+                            <Td></Td>
+                            <Td></Td>
+                            <Td></Td>
+                        </Tr>
+                    )}
+                </Tbody>
+                <Tfoot>
+                    <Tr>
+                        <Th isNumeric>ID</Th>
+                        <Th isNumeric>Department ID</Th>
+                        <Th> Name</Th>
+                        <Th>Email</Th>
+                        <Th>Address</Th>
+                        <Th isNumeric>Phone</Th>
+                        <Th>Job Title</Th>
+                        <Th isNumeric>Salary</Th>
+                    </Tr>
+                </Tfoot>
+            </Table>
+        );
+    }
+}
 
+export default class EmployeeAll extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            employee: undefined,
+
+        };
+    }
+
+
+    componentDidMount() {
+        
+        this.getEmployeeList();
+   
+    }
+
+    // filters customer list on
+   
+    getEmployeeList() {
+        fetch('/api/get-employee')
+            .then((response) => response.json())
+            .then((data) => {
+                this.setState({
+                    employee: data,
+                });
+            });
+    }
     render() {
         return (
             <>
@@ -48,8 +215,7 @@ export default class EmployeeAll extends Component {
                     width='100%'
                     bg='brand.300'
                     color='brand.600'
-                    height='100vh * 4'
-                    style={{ minHeight: '100vh' }}
+                    height='100vh'
                 >
                     <Center>
                         <Box
@@ -65,60 +231,14 @@ export default class EmployeeAll extends Component {
                                 align='center'
                                 spacing={3}
                             >
-                                <Heading>Departments</Heading>
-                                <Table size='lg'>
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Department ID</Th>
-                                            <Th>Department Name</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {this.state.departments ? (
-                                            this.state.departments.map(
-                                                (dept) => (
-                                                    <Tr
-                                                        key={dept.department_id}
-                                                    >
-                                                        <Td>
-                                                            {dept.department_id}
-                                                        </Td>
-                                                        <Td>
-                                                            {
-                                                                dept.department_name
-                                                            }
-                                                        </Td>
-                                                    </Tr>
-                                                )
-                                            )
-                                        ) : (
-                                            <Tr>
-                                                <Td>Loading...</Td>
-                                                <Td></Td>
-                                            </Tr>
-                                        )}
-                                    </Tbody>
-                                    <Tfoot>
-                                        <Tr>
-                                            <Th>Department ID</Th>
-                                            <Th>Department Name</Th>
-                                        </Tr>
-                                    </Tfoot>
-                                </Table>
-                                <Box></Box>
-                                <HStack spacing={2} mt={2}>
-                                    <Link to='/department/create'>
-                                        <Button>Add a department</Button>
-                                    </Link>
-                                    <Link to='/department/edit'>
-                                        <Button>
-                                            Modify an existing department
-                                        </Button>
-                                    </Link>
-                                    <Link to='/'>
-                                        <Button>Back to Home</Button>
-                                    </Link>
-                                </HStack>
+                                <Heading>All Employee</Heading>
+                                <EmployeeTable
+                                    employee={this.state.employee}
+                                 
+                                />
+                                <Link to='/'>
+                                    <Button>Back to Home</Button>
+                                </Link>
                             </Stack>
                         </Box>
                     </Center>
