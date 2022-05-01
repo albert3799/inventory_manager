@@ -49,7 +49,7 @@ export default class Employee extends Component {
                                 <Link to='/employee/add'> 
                                     <Button>Add Employee</Button>
                                 </Link>
-                                <Link to='/employee/allEmployee'>    
+                                <Link to='/employee/all'>    
                                     <Button>View All Employee</Button>
                                 </Link>
                                 <Link to='/employee/removeEmployee'> 

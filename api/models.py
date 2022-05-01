@@ -45,7 +45,7 @@ class Transaction(models.Model):
 
 class Employee(models.Model):
     employee_id = models.IntegerField(unique=True)
-    dept_id = models.CharField(max_length=5) 
+    department_id = models.CharField(max_length=5) 
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     email = models.CharField(max_length=50)

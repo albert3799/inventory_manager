@@ -69,7 +69,8 @@ export default class DepartmentCreate extends Component {
             });
             isError = true;
         }
-
+        console.log("reached");
+        console.log(isError);
         if (isError) {
             return;
         }

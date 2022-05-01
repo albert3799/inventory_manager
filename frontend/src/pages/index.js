@@ -28,3 +28,4 @@ export {default as ItemCreate} from "./ItemCreate.jsx";
 
 export {default as Employee } from "./Employee.jsx";
 export {default as EmployeeAdd } from "./EmployeeAdd.jsx";
+export {default as EmployeeAll } from "./EmployeeAll.jsx";

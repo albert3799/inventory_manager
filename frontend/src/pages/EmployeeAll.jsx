@@ -24,133 +24,54 @@ class EmployeeTable extends Component {
 
         this.state = {
             employee: undefined,
-            filter: 'none',
+    
         };
-
-        this.filterEmployeeList = this.filterEmployeeList.bind(this);
-    }
-
+    }    
+  
     componentDidMount() {
-        this.setState({
-            employee: this.props.employee,
-            filter: this.props.filter,
-            filtered_employee: this.props.employee,
-        });
+        
+        this.getEmployeeList();
+   
     }
 
-    // filters Employee list on
-    filterEmployeeList() {
-        if (this.state.filter === 'none') {
-            // change from no filter to only show members
-            if (this.state.employee === undefined) {
+    // filters customer list on
+   
+    getEmployeeList() {
+        fetch('/api/get-employee')
+            .then((response) => response.json())
+            .then((data) => {
                 this.setState({
-                    employee: this.props.employee,
-                    filter: this.props.filter,
+                    employee: data,
                 });
-                var filtered_employee = [];
-
-                for (var i = 0; i < this.props.employee.length; i++) {
-                    if (this.props.employee[i].member) {
-                        filtered_employee.push(this.props.employee[i]);
-                    }
-                }
-
-                this.setState({
-                    filter: 'member',
-                    filtered_employee: filtered_employee,
-                });
-
-                memberTitle1.innerHTML = 'Member Status [members]';
-                memberTitle2.innerHTML = 'Member Status [members]';
-                return;
-            }
-
-            var filtered_employee = [];
-            for (var i = 0; i < this.state.employee.length; i++) {
-                if (this.state.employee[i].member) {
-                    filtered_employee.push(this.state.employee[i]);
-                }
-            }
-
-            this.setState({
-                filter: 'member',
-                filtered_employee: filtered_employee,
             });
-
-            memberTitle1.innerHTML = 'Member Status [members]';
-            memberTitle2.innerHTML = 'Member Status [members]';
-        } else if (this.state.filter === 'member') {
-            // change from only show members to only show non-members
-            if (this.state.employee === undefined) {
-                this.setState({
-                    employee: this.props.employee,
-                    filter: this.props.filter,
-                });
-            }
-
-            var filtered_employee = [];
-            for (var i = 0; i < this.state.employee.length; i++) {
-                if (!this.state.employee[i].member) {
-                    filtered_employee.push(this.state.employee[i]);
-                }
-            }
-
-            this.setState({
-                filter: 'no member',
-                filtered_employee: filtered_employee,
-            });
-
-            memberTitle1.innerHTML = 'Member Status [non-members]';
-            memberTitle2.innerHTML = 'Member Status [non-members]';
-        } else {
-            // change from only show non-members to show all
-            if (this.state.employee === undefined) {
-                this.setState({
-                    employee: this.props.employee,
-                    filter: this.props.filter,
-                });
-            }
-
-            this.setState({
-                filter: 'none',
-                filtered_employee: this.state.employee,
-            });
-
-            memberTitle1.innerHTML = 'Member Status [all]';
-            memberTitle2.innerHTML = 'Member Status [all]';
-        }
-        return;
     }
-
     render() {
         return (
             <Table size='md'>
                 <Thead>
                     <Tr>
                         <Th isNumeric>ID</Th>
-                        <Th>Name</Th>
+                        <Th isNumeric>Department ID</Th>
+                        <Th> Name</Th>
                         <Th>Email</Th>
                         <Th>Address</Th>
                         <Th isNumeric>Phone</Th>
-                        <Th
-                            id='memberTitle1'
-                            isNumeric
-                            cursor='pointer'
-                            onClick={this.filterEmployeeList}
-                        >
-                            <Tooltip label='Filter on member status'>
-                                Member Status [all]
-                            </Tooltip>
-                        </Th>
+                        <Th>Job Title</Th>
+                        <Th isNumeric>Salary</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {this.state.filtered_employee ? (
-                        this.state.filtered_employee.map((empl) => (
-                            <Tr key={empl.employee_id}>
+                    {this.state.employee ? (
+                        this.state.employee.map((empl) => (
+                            <Tr key={empl.employee}>
                                 <Td isNumeric>
                                     <Link to={`/employee/${empl.employee_id}`}>
                                         {empl.employee_id}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.department_id}
                                     </Link>
                                 </Td>
                                 <Td>
@@ -160,7 +81,7 @@ class EmployeeTable extends Component {
                                 </Td>
                                 <Td>
                                     <Link to={`/employee/${empl.employee_id}`}>
-                                        {empl.email_address}
+                                        {empl.email}
                                     </Link>
                                 </Td>
                                 <Td>
@@ -173,13 +94,14 @@ class EmployeeTable extends Component {
                                         {empl.phone}
                                     </Link>
                                 </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.job_title}
+                                    </Link>
+                                </Td>
                                 <Td isNumeric>
                                     <Link to={`/employee/${empl.employee_id}`}>
-                                        {empl.member ? (
-                                            <CheckIcon />
-                                        ) : (
-                                            <SmallCloseIcon />
-                                        )}
+                                        {empl.salary}
                                     </Link>
                                 </Td>
                             </Tr>
@@ -187,9 +109,14 @@ class EmployeeTable extends Component {
                     ) : this.props.employee ? (
                         this.props.employee.map((empl) => (
                             <Tr key={empl.employee_id}>
-                                <Td isNumeric>
+                                                               <Td isNumeric>
                                     <Link to={`/employee/${empl.employee_id}`}>
                                         {empl.employee_id}
+                                    </Link>
+                                </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.department_id}
                                     </Link>
                                 </Td>
                                 <Td>
@@ -199,7 +126,7 @@ class EmployeeTable extends Component {
                                 </Td>
                                 <Td>
                                     <Link to={`/employee/${empl.employee_id}`}>
-                                        {empl.email_address}
+                                        {empl.email}
                                     </Link>
                                 </Td>
                                 <Td>
@@ -212,13 +139,14 @@ class EmployeeTable extends Component {
                                         {empl.phone}
                                     </Link>
                                 </Td>
+                                <Td>
+                                    <Link to={`/employee/${empl.employee_id}`}>
+                                        {empl.job_title}
+                                    </Link>
+                                </Td>
                                 <Td isNumeric>
                                     <Link to={`/employee/${empl.employee_id}`}>
-                                        {empl.member ? (
-                                            <CheckIcon />
-                                        ) : (
-                                            <SmallCloseIcon />
-                                        )}
+                                        {empl.salary}
                                     </Link>
                                 </Td>
                             </Tr>
@@ -237,20 +165,13 @@ class EmployeeTable extends Component {
                 <Tfoot>
                     <Tr>
                         <Th isNumeric>ID</Th>
-                        <Th>Name</Th>
+                        <Th isNumeric>Department ID</Th>
+                        <Th> Name</Th>
                         <Th>Email</Th>
                         <Th>Address</Th>
                         <Th isNumeric>Phone</Th>
-                        <Th
-                            id='memberTitle2'
-                            isNumeric
-                            cursor='pointer'
-                            onClick={this.filterEmployeeList}
-                        >
-                            <Tooltip label='Filter on member status'>
-                                Member Status [all]
-                            </Tooltip>
-                        </Th>
+                        <Th>Job Title</Th>
+                        <Th isNumeric>Salary</Th>
                     </Tr>
                 </Tfoot>
             </Table>
@@ -264,26 +185,28 @@ export default class EmployeeAll extends Component {
 
         this.state = {
             employee: undefined,
-            filtered_employee: undefined,
-            filter: 'none',
+
         };
     }
 
+
     componentDidMount() {
+        
         this.getEmployeeList();
+   
     }
 
+    // filters customer list on
+   
     getEmployeeList() {
         fetch('/api/get-employee')
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
                     employee: data,
-                    filtered_employee: data,
                 });
             });
     }
-
     render() {
         return (
             <>
@@ -310,8 +233,8 @@ export default class EmployeeAll extends Component {
                             >
                                 <Heading>All Employee</Heading>
                                 <EmployeeTable
-                                    employee={this.state.filtered_employee}
-                                    filter={this.state.filter}
+                                    employee={this.state.employee}
+                                 
                                 />
                                 <Link to='/'>
                                     <Button>Back to Home</Button>

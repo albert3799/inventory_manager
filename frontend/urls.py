@@ -31,6 +31,6 @@ urlpatterns = [
     path("transaction/create",index),
 
     path("employee/",index),
-    path("employee/add",index)
-    
+    path("employee/add",index),
+    path("employee/all",index)
 ]
